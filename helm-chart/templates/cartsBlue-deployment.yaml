@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: carts-blue
+  labels:
+    app: {{ .Chart.Name }}-selector-carts
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.cartsBlue.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-selector-carts
+        deployment: carts-blue
+    spec:
+      containers:
+      - name: {{ .Values.cartsBlue.container.name }}
+        image: "{{ .Values.cartsBlue.image.repository }}:{{ .Values.cartsBlue.image.tag }}"
+        imagePullPolicy: {{ .Values.cartsBlue.image.pullPolicy }}
+        env:
+        - name: DT_TAGS
+          value: "application={{ .Chart.Name }}"
+        ports:
+        - name: internalport
+          containerPort: {{ .Values.cartsBlue.service.internalPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
