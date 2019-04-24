@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: carts-green
+  labels:
+    app: {{ .Chart.Name }}-selector-carts
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.cartsGreen.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-selector-carts
+        deployment: carts-green
+    spec:
+      containers:
+      - name: {{ .Values.cartsGreen.container.name }}
+        image: "{{ .Values.cartsGreen.image.repository }}:{{ .Values.cartsGreen.image.tag }}"
+        imagePullPolicy: {{ .Values.cartsGreen.image.pullPolicy }}
+        env:
+        - name: DT_TAGS
+          value: "application={{ .Chart.Name }}"
+        ports:
+        - name: internalport
+          containerPort: {{ .Values.cartsGreen.service.internalPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
