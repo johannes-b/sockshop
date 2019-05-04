@@ -3,4 +3,4 @@ registry: sockshop
 stages:
     - {deployment_strategy: direct, name: dev, test_strategy: functional}
     - {deployment_strategy: blue_green_service, name: staging, test_strategy: performance}
-    - {deployment_strategy: blue_green_service, name: production}
+    - {deployment_strategy: blue_green_mirroring, name: production}
