@@ -19,4 +19,4 @@ spec:
                     destination:
                         host: carts.staging.svc.cluster.local
                         subset: green
-                    weight: 100
+                    weight: test_works_in_deploy
