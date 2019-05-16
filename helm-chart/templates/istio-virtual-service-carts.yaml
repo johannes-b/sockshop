@@ -14,8 +14,7 @@ spec:
                     destination:
                         host: carts.staging.svc.cluster.local
                         subset: blue
-                    weight: 0
-mirror:
+                    weight: 100
 mirror:
                         host: carts.staging.svc.cluster.local
                         subset: green
